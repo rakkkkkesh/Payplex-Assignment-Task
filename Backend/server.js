@@ -12,8 +12,9 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://your-netlify-app.netlify.app', 'http://localhost:3000']
+  origin: ['https://payplex-assignment-task-frontend.netlify.app', 'http://localhost:5000']
 }));
+
 app.use(express.json());
 
 // Ensure 'uploads' folder exists
