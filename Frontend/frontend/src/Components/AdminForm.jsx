@@ -192,130 +192,191 @@ const AdminForm = () => {
     }
   };
 
-   return (
+  return (
     <div className="container-fluid p-3 p-md-4">
-      <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
+      
       <div className="card shadow-sm">
         <div className="card-header bg-white">
           <h2 className="mb-0" style={{ color: '#ff4081', fontSize: 'calc(1.2rem + 0.6vw)' }}>
             {id ? 'Edit Page' : 'Create New Page'}
           </h2>
         </div>
+        
         <div className="card-body">
           <form onSubmit={handleSubmit} noValidate>
             <div className="row g-3">
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Logo (Image Upload)</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className={`form-control form-control-lg ${errors.logoFile ? 'is-invalid' : ''}`}
-                  onChange={handleLogoChange}
-                />
-                {id && !logoFile && <div className="form-text text-muted">Leave empty to keep existing logo</div>}
-                {errors.logoFile && <div className="invalid-feedback">{errors.logoFile}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Email ID</label>
-                <input
-                  type="email"
-                  name="mailId"
-                  placeholder="Enter email address"
-                  className={`form-control form-control-lg ${errors.mailId ? 'is-invalid' : ''}`}
-                  value={formData.mailId}
-                  onChange={handleChange}
-                />
-                {errors.mailId && <div className="invalid-feedback">{errors.mailId}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Contact No.</label>
-                <input
-                  type="text"
-                  name="contact"
-                  placeholder="Enter 10 digit contact number"
-                  className={`form-control form-control-lg ${errors.contact ? 'is-invalid' : ''}`}
-                  value={formData.contact}
-                  onChange={handleChange}
-                />
-                {errors.contact && <div className="invalid-feedback">{errors.contact}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Banner Image (Upload)</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className={`form-control form-control-lg ${errors.bannerFile ? 'is-invalid' : ''}`}
-                  onChange={handleBannerChange}
-                />
-                {id && !bannerFile && <div className="form-text text-muted">Leave empty to keep existing banner</div>}
-                {errors.bannerFile && <div className="invalid-feedback">{errors.bannerFile}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Header</label>
-                <input
-                  type="text"
-                  name="header"
-                  placeholder="Enter header title"
-                  className={`form-control form-control-lg ${errors.header ? 'is-invalid' : ''}`}
-                  value={formData.header}
-                  onChange={handleChange}
-                />
-                {errors.header && <div className="invalid-feedback">{errors.header}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Text</label>
-                <textarea
-                  name="text"
-                  placeholder="Enter main content text"
-                  className={`form-control form-control-lg ${errors.text ? 'is-invalid' : ''}`}
-                  value={formData.text}
-                  onChange={handleChange}
-                />
-                {errors.text && <div className="invalid-feedback">{errors.text}</div>}
-              </div>
-
-              <div className="col-md-12">
-                <label className="form-label fw-semibold">Address</label>
-                <textarea
-                  name="address"
-                  placeholder="Enter full address"
-                  className={`form-control form-control-lg ${errors.address ? 'is-invalid' : ''}`}
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-                {errors.address && <div className="invalid-feedback">{errors.address}</div>}
-              </div>
-
-              <div className="col-12">
-                <div className="form-check form-switch">
+              {/* Logo Upload */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Logo (Image Upload)</label>
                   <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="isActive"
-                    name="isActive"
-                    checked={formData.isActive}
-                    onChange={handleChange}
+                    type="file"
+                    accept="image/*"
+                    className={`form-control form-control-lg ${errors.logoFile ? 'is-invalid' : ''}`}
+                    onChange={handleLogoChange}
                   />
-                  <label className="form-check-label fw-semibold" htmlFor="isActive">Is Active</label>
+                  {id && !logoFile && (
+                    <div className="form-text text-muted">Leave empty to keep existing logo</div>
+                  )}
+                  {errors.logoFile && <div className="invalid-feedback">{errors.logoFile}</div>}
                 </div>
               </div>
 
-              <div className="col-12 text-end">
-                <button
-                  type="submit"
-                  className="btn btn-primary px-4"
-                  disabled={loading || (id ? !isUpdateEnabled : false)}
-                >
-                  {loading ? 'Saving...' : id ? 'Update Page' : 'Create Page'}
-                </button>
+              {/* Email ID */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Email ID</label>
+                  <input
+                    type="email"
+                    name="mailId"
+                    placeholder="Enter Email ID"
+                    className={`form-control form-control-lg ${errors.mailId ? 'is-invalid' : ''}`}
+                    value={formData.mailId}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.mailId && <div className="invalid-feedback">{errors.mailId}</div>}
+                </div>
               </div>
 
+              {/* Contact No. */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Contact No.</label>
+                  <input
+                    type="text"
+                    name="contact"
+                    className={`form-control form-control-lg ${errors.contact ? 'is-invalid' : ''}`}
+                    value={formData.contact}
+                    onChange={handleChange}
+                    required
+                    pattern="\d{10}"
+                    inputMode="numeric"
+                    maxLength="10"
+                    placeholder="Enter 10 digit number"
+                  />
+                  {errors.contact && <div className="invalid-feedback">{errors.contact}</div>}
+                </div>
+              </div>
+
+              {/* Banner Image */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Banner Image (Upload)</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className={`form-control form-control-lg ${errors.bannerFile ? 'is-invalid' : ''}`}
+                    onChange={handleBannerChange}
+                  />
+                  {id && !bannerFile && (
+                    <div className="form-text text-muted">Leave empty to keep existing banner image</div>
+                  )}
+                  {errors.bannerFile && <div className="invalid-feedback">{errors.bannerFile}</div>}
+                </div>
+              </div>
+
+              {/* Header */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Header</label>
+                  <input
+                    type="text"
+                    name="header"
+                    placeholder="Enter header"
+                    className={`form-control form-control-lg ${errors.header ? 'is-invalid' : ''}`}
+                    value={formData.header}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.header && <div className="invalid-feedback">{errors.header}</div>}
+                </div>
+              </div>
+
+              {/* Text */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Text</label>
+                  <textarea
+                    name="text"
+                    placeholder="Enter text"
+                    className={`form-control form-control-lg ${errors.text ? 'is-invalid' : ''}`}
+                    value={formData.text}
+                    onChange={handleChange}
+                    required
+                    rows={1}
+                  />
+                  {errors.text && <div className="invalid-feedback">{errors.text}</div>}
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label className="form-label fw-semibold">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="Enter address"
+                    className={`form-control form-control-lg ${errors.address ? 'is-invalid' : ''}`}
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.address && <div className="invalid-feedback">{errors.address}</div>}
+                </div>
+              </div>
+
+              {/* Active Checkbox */}
+              <div className="col-12 col-md-6">
+                <div className="form-group d-flex align-items-center h-100">
+                  <div className="form-check form-switch">
+                    <input
+                      type="checkbox"
+                      name="isActive"
+                      className="form-check-input"
+                      id="isActiveCheck"
+                      checked={formData.isActive}
+                      onChange={handleChange}
+                      style={{ width: '2.5em', height: '1.5em' }}
+                    />
+                    <label htmlFor="isActiveCheck" className="form-check-label ms-2 fw-semibold">Active</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="col-12">
+                <div className="d-flex flex-wrap gap-2">
+                  <button
+                    type="submit"
+                    className="btn btn-primary px-4 py-2"
+                    disabled={id ? (!isUpdateEnabled || loading) : loading}
+                  >
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        {id ? 'Updating...' : 'Creating...'}
+                      </>
+                    ) : id ? 'Update' : 'Create'}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary px-4 py-2"
+                    onClick={() => navigate('/admin')}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
