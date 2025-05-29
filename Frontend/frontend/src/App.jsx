@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Components/Navbar';
 import AdminDashboard from './Components/AdminDashboard';
@@ -42,18 +42,19 @@ function App() {
                     Manage and view dynamic pages with ease.
                   </p>
                   <div className="d-grid gap-3 d-md-flex justify-content-md-center">
-                    <a
-                      href="/admin"
+                    <Link
+                      to="/admin"
                       className="btn btn-primary btn-lg px-4 py-2 shadow-sm"
                     >
                       Admin Panel
-                    </a>
-                    <a
-                      href="/user"
+                    </Link>
+
+                    <Link
+                      to="/user"
                       className="btn btn-info btn-lg px-4 py-2 shadow-sm text-white"
                     >
                       User Panel
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
