@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // const API_BASE_URL = 'http://localhost:5000';
 const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
@@ -38,14 +39,14 @@ function UserPanel() {
         ) : activePages.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-2 gap-md-3">
             {activePages.map((_, index) => (
-              <a
+              <Link
                 key={index}
-                href={`/home${index + 1}`}
+                to={`/home${index + 1}`}
                 className="btn btn-lg btn-outline-success px-3 px-md-4 py-2 py-md-3 shadow-sm"
                 style={{ minWidth: '120px', flex: '1 0 auto', maxWidth: '200px' }}
               >
                 Home{index + 1}
-              </a>
+              </Link>
             ))}
           </div>
         ) : (
