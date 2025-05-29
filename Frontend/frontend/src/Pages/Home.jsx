@@ -1,8 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
+
 const Home = ({ page, pageName }) => {
   const navigate = useNavigate();
+
   return (
     <div
       className="container my-5 p-4 shadow rounded bg-white"
@@ -18,7 +22,7 @@ const Home = ({ page, pageName }) => {
         <strong>Logo:</strong>
         <div className="mt-2">
           <img
-            src={`http://localhost:5000${page.logo}`}
+            src={`${API_BASE_URL}${page.logo}`}
             alt="Logo"
             className="img-fluid rounded shadow-sm"
             style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
@@ -47,7 +51,7 @@ const Home = ({ page, pageName }) => {
         <strong>Banner Image:</strong>
         <div className="mt-2 text-center">
           <img
-            src={`http://localhost:5000${page.bannerImage}`}
+            src={`${API_BASE_URL}${page.bannerImage}`}
             alt="Banner"
             className="img-fluid rounded shadow-sm"
             style={{ maxHeight: '200px', objectFit: 'cover', width: '100%' }}
@@ -74,13 +78,15 @@ const Home = ({ page, pageName }) => {
         <strong style={{ minWidth: '90px' }}>Address:</strong>
         <small className="ms-3">{page.address}</small>
       </div>
-       <button
-    type="button"
-    className="btn btn-secondary align-items-center"
-    onClick={() => navigate('/user')}
-  >
-    Go Back
-  </button>
+
+      {/* Go Back Button */}
+      <button
+        type="button"
+        className="btn btn-secondary align-items-center"
+        onClick={() => navigate('/user')}
+      >
+        Go Back
+      </button>
     </div>
   );
 };

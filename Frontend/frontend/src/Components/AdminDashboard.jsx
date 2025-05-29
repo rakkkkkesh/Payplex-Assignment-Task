@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
-const API_URL = 'http://localhost:5000/api/pages';
+// const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
+const API_URL = `${API_BASE_URL}/api/pages`;
 
 function AdminDashboard() {
   const [pages, setPages] = useState([]);
@@ -83,10 +85,24 @@ function AdminDashboard() {
           <tbody>
             {pages.map(page => (
               <tr key={page._id}>
-                <td><img src={`http://localhost:5000${page.logo}`} alt="Logo" className="img-fluid" style={{ maxWidth: '80px' }} /></td>
+                <td>
+                  <img
+                    src={`${API_BASE_URL}${page.logo}`}
+                    alt="Logo"
+                    className="img-fluid"
+                    style={{ maxWidth: '80px' }}
+                  />
+                </td>
                 <td>{page.mailId}</td>
                 <td>{page.contact}</td>
-                <td><img src={`http://localhost:5000${page.bannerImage}`} alt="Banner" className="img-fluid" style={{ maxWidth: '80px' }} /></td>
+                <td>
+                  <img
+                    src={`${API_BASE_URL}${page.bannerImage}`}
+                    alt="Banner"
+                    className="img-fluid"
+                    style={{ maxWidth: '80px' }}
+                  />
+                </td>
                 <td>{page.header}</td>
                 <td>{page.text}</td>
                 <td>{page.address}</td>
@@ -95,7 +111,10 @@ function AdminDashboard() {
                   <div className="d-flex flex-wrap gap-1">
                     <button className="btn btn-primary btn-sm" onClick={() => navigate(`/admin/edit/${page._id}`)}>Edit</button>
                     <button className="btn btn-danger btn-sm" onClick={() => confirmDelete(page._id)}>Delete</button>
-                    <button className={`btn btn-sm ${page.isActive ? 'btn-warning' : 'btn-success'}`} onClick={() => handleToggleStatus(page._id)}>
+                    <button
+                      className={`btn btn-sm ${page.isActive ? 'btn-warning' : 'btn-success'}`}
+                      onClick={() => handleToggleStatus(page._id)}
+                    >
                       {page.isActive ? 'Deactivate' : 'Activate'}
                     </button>
                   </div>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/pages';
+// const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
+const API_URL = `${API_BASE_URL}/api/pages`;
 
 function UserPanel() {
   const [activePages, setActivePages] = useState([]);
