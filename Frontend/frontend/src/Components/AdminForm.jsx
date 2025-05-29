@@ -89,10 +89,21 @@ const AdminForm = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    
+    // For contact field, only allow numbers and limit to 10 digits
+    if (name === 'contact') {
+      const numericValue = value.replace(/\D/g, '').slice(0, 10);
+      setFormData(prev => ({
+        ...prev,
+        [name]: numericValue,
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
+    
     setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
@@ -116,6 +127,8 @@ const AdminForm = () => {
     else if (!/\S+@\S+\.\S+/.test(formData.mailId)) newErrors.mailId = 'Invalid email format';
 
     if (!formData.contact.trim()) newErrors.contact = 'Contact No. is required';
+    else if (!/^\d{10}$/.test(formData.contact)) newErrors.contact = 'Contact No. must be exactly 10 digits';
+
     if (!formData.header.trim()) newErrors.header = 'Header is required';
     if (!formData.text.trim()) newErrors.text = 'Text is required';
     if (!formData.address.trim()) newErrors.address = 'Address is required';
@@ -244,6 +257,10 @@ const AdminForm = () => {
                     value={formData.contact}
                     onChange={handleChange}
                     required
+                    pattern="\d{10}"
+                    inputMode="numeric"
+                    maxLength="10"
+                    placeholder="Enter 10 digit number"
                   />
                   {errors.contact && <div className="invalid-feedback">{errors.contact}</div>}
                 </div>
