@@ -1,0 +1,42 @@
+NOTE: If you're using the live deployed URL, please allow a few seconds for the data to load, as it may take a short while to fetch from the database. If you wish to run the project locally, please follow the steps below and make sure you uncomment the local URL and comment out the live URL in the configuration files before proceeding.
+
+Local Setup Instructions:
+
+1. Clone the repository using the following command:
+   git clone https://github.com/rakkkkkesh/Payplex-Assignment-Task.git
+
+2. Setup Backend
+   cd Payplex-Assignment-Task/Backend (Navigate to Backend folder)
+
+   (to install necessary dependencies)
+   1. npm install
+   (to run backend)
+   2. npm run dev 
+
+3. Setup Frontend
+   cd ../Frontend/frontend (Navigate to Frontend/frontend folder - frontend is the React application name which is inside the Frontend folder)
+   (once you are inside the React application, run the following commands)
+   
+   (to install necessary dependencies)
+   1. npm install 
+   (to start React application)
+   2. npm start 
+
+Project Overview:
+
+When you launch the application, you'll find two panels (Admin and User) displayed with a top navigation bar:
+
+1. Admin Panel
+- Admin can create new pages using a form that includes: Logo, Mail ID, Contact, Banner Image, Header, Text, and Address.
+- All created pages are displayed in a table with full CRUD functionality – Insert, Update, Delete.
+- Admin has the ability to activate or deactivate any page.
+- Only active pages are visible on the user panel.
+
+2. User Panel
+- Displays only the active pages, organized route-wise.
+- Instead of generic names like Home1, Home2, etc., the actual Header values of the pages are used as headings.
+- Clicking on a heading navigates to that page and displays its details.
+
+Links:
+- Live URL: https://payplex-assignment-task-frontend.netlify.app
+- GitHub Repository: https://github.com/rakkkkkesh/Payplex-Assignment-Task
