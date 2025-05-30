@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // const API_BASE_URL = 'http://localhost:5000';
 const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
@@ -10,34 +13,29 @@ const API_URL = `${API_BASE_URL}/api/pages`;
 function AdminDashboard() {
   const [pages, setPages] = useState([]);
   const [pageToDelete, setPageToDelete] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const bsModal = useRef(null);
 
-  // const fetchPages = async () => {
-  //   try {
-  //     const res = await axios.get(API_URL);
-  //     setPages(res.data);
-  //     console.log(res.data);
-      
-  //   } catch (error) {
-  //     toast.error('Failed to fetch pages');
-  //   }
-  // };
-
   const fetchPages = async () => {
-  try {
-    const res = await axios.get(API_URL);
-    console.log("Full response data:", res.data); // Log the complete response
-    res.data.forEach(page => {
-      console.log(`Page ${page._id} logo path:`, page.logo);
-      console.log(`Page ${page._id} banner path:`, page.bannerImage);
-    });
-    setPages(res.data);
-  } catch (error) {
-    toast.error('Failed to fetch pages');
-  }
-};
+    setIsLoading(true);
+    try {
+      const res = await axios.get(API_URL);
+      console.log("Full response data:", res.data);
+      res.data.forEach(page => {
+        console.log(`Page ${page._id} logo path:`, page.logo);
+        console.log(`Page ${page._id} banner path:`, page.bannerImage);
+      });
+      setPages(res.data);
+    } catch (error) {
+      toast.error('Failed to fetch pages');
+      setPages([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchPages();
     if (modalRef.current) {
@@ -98,45 +96,60 @@ function AdminDashboard() {
             </tr>
           </thead>
           <tbody>
-            {pages.map(page => (
-              <tr key={page._id}>
-                <td>
-                  <img
-                    src={`${API_BASE_URL}${page.logo}`}
-                    alt="Logo"
-                    className="img-fluid"
-                    style={{ maxWidth: '80px' }}
-                  />
-                </td>
-                <td>{page.mailId}</td>
-                <td>{page.contact}</td>
-                <td>
-                  <img
-                    src={`${API_BASE_URL}${page.bannerImage}`}
-                    alt="Banner"
-                    className="img-fluid"
-                    style={{ maxWidth: '80px' }}
-                  />
-                </td>
-                <td>{page.header}</td>
-                <td>{page.text}</td>
-                <td>{page.address}</td>
-                <td>{page.isActive ? 'Yes' : 'No'}</td>
-                <td>
-                  <div className="d-flex flex-wrap gap-1">
-                    <button className="btn btn-primary btn-sm" onClick={() => navigate(`/admin/edit/${page._id}`)}>Edit</button>
-                    <button className="btn btn-danger btn-sm" onClick={() => confirmDelete(page._id)}>Delete</button>
-                    <button
-                      className={`btn btn-sm ${page.isActive ? 'btn-warning' : 'btn-success'}`}
-                      onClick={() => handleToggleStatus(page._id)}
-                    >
-                      {page.isActive ? 'Deactivate' : 'Activate'}
-                    </button>
+            {isLoading ? (
+              <tr>
+                <td colSpan="9" className="text-center">
+                  <div className="d-flex justify-content-center">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   </div>
                 </td>
               </tr>
-            ))}
-            {pages.length === 0 && (
+            ) : pages.length > 0 ? (
+              pages.map(page => (
+                <tr key={page._id}>
+                  <td>
+                    {page.logo && (
+                      <img
+                        src={`${API_BASE_URL}${page.logo}`}
+                        alt="Logo"
+                        className="img-fluid"
+                        style={{ maxWidth: '80px' }}
+                      />
+                    )}
+                  </td>
+                  <td>{page.mailId}</td>
+                  <td>{page.contact}</td>
+                  <td>
+                    {page.bannerImage && (
+                      <img
+                        src={`${API_BASE_URL}${page.bannerImage}`}
+                        alt="Banner"
+                        className="img-fluid"
+                        style={{ maxWidth: '80px' }}
+                      />
+                    )}
+                  </td>
+                  <td>{page.header}</td>
+                  <td>{page.text}</td>
+                  <td>{page.address}</td>
+                  <td>{page.isActive ? 'Yes' : 'No'}</td>
+                  <td>
+                    <div className="d-flex flex-wrap gap-1">
+                      <button className="btn btn-primary btn-sm" onClick={() => navigate(`/admin/edit/${page._id}`)}>Edit</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => confirmDelete(page._id)}>Delete</button>
+                      <button
+                        className={`btn btn-sm ${page.isActive ? 'btn-warning' : 'btn-success'}`}
+                        onClick={() => handleToggleStatus(page._id)}
+                      >
+                        {page.isActive ? 'Deactivate' : 'Activate'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
                 <td colSpan="9" className="text-center">No pages found</td>
               </tr>
