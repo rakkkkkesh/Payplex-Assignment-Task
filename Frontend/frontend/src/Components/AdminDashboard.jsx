@@ -14,15 +14,30 @@ function AdminDashboard() {
   const modalRef = useRef(null);
   const bsModal = useRef(null);
 
-  const fetchPages = async () => {
-    try {
-      const res = await axios.get(API_URL);
-      setPages(res.data);
-    } catch (error) {
-      toast.error('Failed to fetch pages');
-    }
-  };
+  // const fetchPages = async () => {
+  //   try {
+  //     const res = await axios.get(API_URL);
+  //     setPages(res.data);
+  //     console.log(res.data);
+      
+  //   } catch (error) {
+  //     toast.error('Failed to fetch pages');
+  //   }
+  // };
 
+  const fetchPages = async () => {
+  try {
+    const res = await axios.get(API_URL);
+    console.log("Full response data:", res.data); // Log the complete response
+    res.data.forEach(page => {
+      console.log(`Page ${page._id} logo path:`, page.logo);
+      console.log(`Page ${page._id} banner path:`, page.bannerImage);
+    });
+    setPages(res.data);
+  } catch (error) {
+    toast.error('Failed to fetch pages');
+  }
+};
   useEffect(() => {
     fetchPages();
     if (modalRef.current) {

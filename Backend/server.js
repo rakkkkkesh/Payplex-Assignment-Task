@@ -10,25 +10,37 @@ const pageRoutes = require('./Routes/PageRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-// app.use(cors())
+// Middleware - Updated CORS configuration
 app.use(cors({
-  origin: ['https://payplex-assignment-task-frontend.netlify.app', 'http://localhost:5000']
+  origin: ['http://localhost:3000', 'http://localhost:5000'], // Add your frontend URL
+  credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Ensure 'uploads' folder exists
+// Configure uploads directory
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true }); // Added recursive option
 }
 
-// Serve static files from 'uploads' folder
-app.use('/uploads', express.static(uploadDir));
+// Serve static files - Updated configuration
+app.use('/uploads', express.static(uploadDir, {
+  setHeaders: (res, path) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
+}));
 
 // Routes
 app.use('/api/pages', pageRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

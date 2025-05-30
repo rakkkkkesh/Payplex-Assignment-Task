@@ -50,13 +50,11 @@ const Home = ({ pageId, pageName }) => {
       className="container my-5 p-4 shadow rounded bg-white"
       style={{ maxWidth: '400px', height: 'auto' }}
     >
-      {/* Page Name Heading */}
-      <h3 className="text-center mb-4 fw-bold" style={{ color: '#ff4081' }}>
-        {pageName}
-      </h3>
+         {/* Header */}
+        <h3 className="text-center mb-4 fw-bold" style={{ color: '#ff4081' }}>{page.header}</h3>
 
       {/* Logo */}
-      <div className="mb-4">
+      <div className="mb-3">
         <strong>Logo:</strong>
         <div className="mt-2">
           <img
@@ -69,7 +67,7 @@ const Home = ({ pageId, pageName }) => {
       </div>
 
       {/* Email ID */}
-      <div className="d-flex align-items-center mb-4">
+      <div className="d-flex align-items-center mb-2">
         <strong style={{ minWidth: '90px' }}>Email ID:</strong>
         <a href={`mailto:${page.mailId}`} className="ms-3 text-decoration-none">
           {page.mailId}
@@ -77,7 +75,7 @@ const Home = ({ pageId, pageName }) => {
       </div>
 
       {/* Contact */}
-      <div className="d-flex align-items-center mb-4">
+      <div className="d-flex align-items-center mb-2">
         <strong style={{ minWidth: '90px' }}>Contact:</strong>
         <a href={`tel:${page.contact}`} className="ms-3 text-decoration-none">
           {page.contact}
@@ -85,7 +83,7 @@ const Home = ({ pageId, pageName }) => {
       </div>
 
       {/* Banner Image */}
-      <div className="mb-4">
+      <div className="mb-3">
         <strong>Banner Image:</strong>
         <div className="mt-2 text-center">
           <img
@@ -97,14 +95,8 @@ const Home = ({ pageId, pageName }) => {
         </div>
       </div>
 
-      {/* Header */}
-      <div className="d-flex align-items-center mb-3">
-        <strong style={{ minWidth: '90px' }}>Header:</strong>
-        <div className="ms-3 fw-bold fs-5">{page.header}</div>
-      </div>
-
       {/* Text */}
-      <div className="d-flex align-items-start mb-4">
+      <div className="d-flex align-items-start mb-2">
         <strong style={{ minWidth: '90px' }}>Text:</strong>
         <p className="ms-3 mb-0" style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}>
           {page.text}
@@ -112,7 +104,7 @@ const Home = ({ pageId, pageName }) => {
       </div>
 
       {/* Address */}
-      <div className="d-flex align-items-center text-muted mb-3">
+      <div className="d-flex align-items-center text-muted mb-2">
         <strong style={{ minWidth: '90px' }}>Address:</strong>
         <small className="ms-3">{page.address}</small>
       </div>

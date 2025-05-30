@@ -51,8 +51,7 @@ function UserPanel() {
                 className="btn btn-lg btn-outline-success px-3 px-md-4 py-2 py-md-3 shadow-sm"
                 style={{ minWidth: '120px', flex: '1 0 auto', maxWidth: '200px' }}
               >
-                {/* {page.header || `Home ${index + 1}`} */}
-                {`Home ${index + 1}`}
+                {page.header || `Home ${index + 1}`}
               </Link>
             ))}
           </div>
