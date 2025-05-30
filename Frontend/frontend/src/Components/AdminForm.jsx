@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// const API_BASE_URL = 'http://localhost:5000'; // Local development URL
+// const API_BASE_URL = 'http://localhost:5000';
 const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
 const API_URL = `${API_BASE_URL}/api/pages`;
 

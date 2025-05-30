@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // const API_BASE_URL = 'http://localhost:5000';
 const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
@@ -10,14 +10,20 @@ function UserPanel() {
   const [activePages, setActivePages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchPages = async () => {
+    try {
+      const res = await axios.get(API_URL);
+      const active = res.data.filter(p => p.isActive);
+      setActivePages(active);
+    } catch (error) {
+      console.error('Failed to load user pages:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    axios.get(API_URL)
-      .then(res => {
-        const active = res.data.filter(p => p.isActive);
-        setActivePages(active);
-      })
-      .catch(() => alert('Failed to load user pages'))
-      .finally(() => setIsLoading(false));
+    fetchPages();
   }, []);
 
   return (
@@ -38,14 +44,15 @@ function UserPanel() {
           </div>
         ) : activePages.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center gap-2 gap-md-3">
-            {activePages.map((_, index) => (
+            {activePages.map((page, index) => (
               <Link
-                key={index}
-                to={`/home${index + 1}`}
+                key={page._id}
+                to={`/home/${page._id}`}
                 className="btn btn-lg btn-outline-success px-3 px-md-4 py-2 py-md-3 shadow-sm"
                 style={{ minWidth: '120px', flex: '1 0 auto', maxWidth: '200px' }}
               >
-                Home{index + 1}
+                {/* {page.header || `Home ${index + 1}`} */}
+                {`Home ${index + 1}`}
               </Link>
             ))}
           </div>

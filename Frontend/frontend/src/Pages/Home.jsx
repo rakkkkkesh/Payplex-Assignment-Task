@@ -1,11 +1,49 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // const API_BASE_URL = 'http://localhost:5000';
 const API_BASE_URL = 'https://payplex-assignment-task-backend.onrender.com';
+const API_URL = `${API_BASE_URL}/api/pages`;
 
-const Home = ({ page, pageName }) => {
+const Home = ({ pageId, pageName }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [page, setPage] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPage = async () => {
+      try {
+        if (!id) {
+          throw new Error('No page ID provided');
+        }
+        const res = await axios.get(`${API_URL}/${id}`);
+        setPage(res.data);
+      } catch (error) {
+        console.error('Failed to load page:', error);
+        toast.error('Failed to load page details');
+        navigate('/user');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPage();
+  }, [id, navigate]);
+
+  if (loading) {
+    return <div className="d-flex justify-content-center my-5">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>;
+  }
+
+  if (!page) {
+    return <div className="alert alert-danger my-5">Page not found</div>;
+  }
 
   return (
     <div

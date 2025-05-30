@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from './Components/Navbar';
 import AdminDashboard from './Components/AdminDashboard';
 import AdminForm from './Components/AdminForm';
@@ -20,12 +21,23 @@ function App() {
         const active = res.data.filter(p => p.isActive);
         setActivePages(active);
       })
-      .catch(() => alert('Failed to load user pages'));
+      .catch(() => toast.error('Failed to load user pages'));
   }, []);
 
   return (
     <Router>
       <Navbar />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="container my-4">
         <Routes>
           <Route
@@ -64,6 +76,10 @@ function App() {
           <Route path="/admin/create" element={<AdminForm />} />
           <Route path="/admin/edit/:id" element={<AdminForm />} />
           <Route path="/user" element={<UserPanel />} />
+          <Route 
+            path="/home/:id" 
+            element={<Home pageName="Home" />} 
+          />
           {activePages.map((page, index) => (
             <Route
               key={page._id}
